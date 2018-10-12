@@ -4,6 +4,7 @@ contract Certifier {
     address public owner;
     mapping(bytes32 => Course) public courses;
 
+
     struct Course {
         string name;
         uint  cost;
@@ -11,6 +12,7 @@ contract Certifier {
         uint threshold;
         bytes32[] codes;
         mapping(address => Student) students;
+        mapping(bytes32 => Session) sessions;
     }
 
     struct Student {
@@ -19,6 +21,13 @@ contract Certifier {
         uint age;
         string email;
         bytes32[] codes;
+    }
+
+    struct Session {
+        string name;
+        uint date;
+        bytes32[] subjects;
+        bytes32[] assistance;
     }
 
     constructor() public {
@@ -42,13 +51,14 @@ contract Certifier {
                 cost: _cost,
                 duration: _duration,
                 threshold: _threshold,
-                codes: _codes
+                codes: _codes,
+                sessions: _sessions
         });
     }
 
-    function getCourse(bytes32 _code) public restricted view returns(string, uint, uint, uint, bytes32[]){
+    function getCourse(bytes32 _code) public restricted view returns(string, uint, uint, uint, bytes32[],bytes32[]){
         Course storage course = courses[_code];
-        return(course.name, course.cost, course.duration, course.threshold, course.codes);
+        return(course.name, course.cost, course.duration, course.threshold, course.codes, course.sessions);
     }
 
     function subscribe(
@@ -67,5 +77,20 @@ contract Certifier {
             email: _email,
             codes: new bytes32[](0)
         });
+    }
+
+    function addSession(
+        bytes32 _course_code,
+        bytes32 _session_code,
+        string _name,
+        uint _date,
+        bytes32[] _subjects) public restricted{
+        Course storage course = courses[_course_code];
+        course.sessions[_code] = Session({name: _name, date: _date, subjects: _subjects});
+    }
+
+    function getSession(bytes32 _code) public restricted view returns(string, uint, bytes32[]) {
+        Session storage session = sessions[_code];
+        return(session.name, session.date, session.subjects);
     }
 }
