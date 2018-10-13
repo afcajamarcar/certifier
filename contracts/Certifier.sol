@@ -39,6 +39,10 @@ contract Certifier {
         _;
     }
 
+    function isOwner() public view returns(bool) {
+        return msg.sender == owner;
+    }
+
     function addCourse(
         bytes32 _code,
         string _name,
