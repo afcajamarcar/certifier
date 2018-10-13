@@ -1,7 +1,7 @@
 <template>
     <div class="fluid-container">
         <div class="row">
-            <div class="col-9">
+            <div class="col-4">
                 <form @submit.prevent="save" >
                     <div class="form-group">
                         <label for="courseCode">Código curso</label>
