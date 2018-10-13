@@ -55,14 +55,13 @@ contract Certifier {
                 cost: _cost,
                 duration: _duration,
                 threshold: _threshold,
-                codes: _codes,
-                sessions: _sessions
+                codes: _codes
         });
     }
 
-    function getCourse(bytes32 _code) public restricted view returns(string, uint, uint, uint, bytes32[],bytes32[]){
+    function getCourse(bytes32 _code) public restricted view returns(string, uint, uint, uint, bytes32[]){
         Course storage course = courses[_code];
-        return(course.name, course.cost, course.duration, course.threshold, course.codes, course.sessions);
+        return(course.name, course.cost, course.duration, course.threshold, course.codes);
     }
 
     function subscribe(
@@ -88,13 +87,9 @@ contract Certifier {
         bytes32 _session_code,
         string _name,
         uint _date,
-        bytes32[] _subjects) public restricted{
+        bytes32[] _subjects,
+        bytes32[] _assitance) public restricted{
         Course storage course = courses[_course_code];
-        course.sessions[_code] = Session({name: _name, date: _date, subjects: _subjects});
-    }
-
-    function getSession(bytes32 _code) public restricted view returns(string, uint, bytes32[]) {
-        Session storage session = sessions[_code];
-        return(session.name, session.date, session.subjects);
+        course.sessions[_session_code] = Session({name: _name, date: _date, subjects: _subjects, assistance: _assitance});
     }
 }

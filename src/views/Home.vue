@@ -4,6 +4,7 @@
             <img alt="Vue logo" src="../assets/logo.png">
             <HelloWorld msg="Certifier Dapp!"/>
         </div>
+        <br>
         <bform></bform>
     </div>
 </template>
